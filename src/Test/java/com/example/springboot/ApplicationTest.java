@@ -51,7 +51,7 @@ class ApplicationTest {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api?post_input_text=testing")).andReturn();
         mockMvc.perform(MockMvcRequestBuilders.post("/delete?post_text=Testing").contentType(MediaType.ALL))
-                .andExpect(content().string(not(containsString("does not exist"))));
+                .andExpect(content().string(containsString("does not exist")));
 
         //pl1.writeLine("the delete functionality has passed Case sensitive testing");
     }
