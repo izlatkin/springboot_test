@@ -1,5 +1,8 @@
 package com.example.utils;
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 
@@ -43,8 +46,11 @@ public class DBLogger {
         try{
             Statement st = con.createStatement();
             //MariaDB Date format "YYYY-MM-DD"
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-MM-DD");
+            LocalDateTime now = LocalDateTime.now();
+            String timeStampToDB = dtf.format(now);
             String sqlQuery = "INSERT INTO SptringBootTable " +
-                    "VALUES (\"2010-01-12\", '" + line + "')";
+                    "VALUES (\""+ timeStampToDB + "\", '" + line + "')";
             st.executeUpdate(sqlQuery);
             System.out.println("query was successfully executed");
         }
