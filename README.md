@@ -27,3 +27,9 @@ View history
 Health check  
 * `http://localhost:8080/actuator/health`
 
+
+HowTo 
+=====
+Create Table for logger
+* `create table SptringBootTable(timeStamp DATE, line VARCHAR(50));`
+
