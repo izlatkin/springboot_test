@@ -9,6 +9,7 @@ public class PostLogger {
     private String filePath;
 
     public PostLogger(String path){
+        DBLogger.connectToDB();
         this.filePath = path;
         File logFile = new File(path);
         try {
@@ -23,19 +24,24 @@ public class PostLogger {
     }
 
     public void writeLine(String line){
+        DBLogger.insert(line);
+        writeLineToLog(line);
+    }
+
+    public void writeLineToLog(String line){
         Path p = Paths.get(filePath);
         String s = System.lineSeparator() + line;
         try (OutputStream out = new BufferedOutputStream(Files.newOutputStream(p,
                 StandardOpenOption.APPEND))) {
             out.write(s.getBytes());
         } catch (IOException e) {
-            System.err.println(e);
+            System.err.println(e.getMessage());
         }
     }
 
-    public String readHistory(){
+    public String readHistoryFromLog(){
         String content = "";
-        ArrayDeque<String> stack = new ArrayDeque<String>();
+        ArrayDeque<String> stack = new ArrayDeque<>();
         try {
             File file = new File(filePath);
             FileReader fr = new FileReader(file);
@@ -59,6 +65,10 @@ public class PostLogger {
         }
         System.out.println(content);
         return content;
+    }
+
+    public String readHistory(){
+        return DBLogger.getHistory();
     }
 
     public boolean deleteString(String toDelete){
