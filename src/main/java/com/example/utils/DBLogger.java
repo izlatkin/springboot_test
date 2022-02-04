@@ -46,7 +46,7 @@ public class DBLogger {
         try{
             Statement st = con.createStatement();
             //MariaDB Date format "YYYY-MM-DD"
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-MM-DD");
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
             LocalDateTime now = LocalDateTime.now();
             String timeStampToDB = dtf.format(now);
             String sqlQuery = "INSERT INTO SptringBootTable " +
